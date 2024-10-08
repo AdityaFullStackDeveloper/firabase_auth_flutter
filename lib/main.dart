@@ -1,3 +1,4 @@
+import 'package:firebase_authen/firebase_options.dart';
 import 'package:firebase_authen/screen/signUp_screen.dart';
 import 'package:firebase_authen/screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -5,7 +6,9 @@ import 'package:flutter/material.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(const MyApp());
 }
 

@@ -32,7 +32,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         gravity: ToastGravity.BOTTOM,
         backgroundColor: Colors.white,
         textColor: Colors.black,
-        fontSize: 16.0);
+        fontSize: 16.0
+    );
   }
 
   @override
