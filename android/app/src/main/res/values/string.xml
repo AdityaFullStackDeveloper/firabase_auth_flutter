@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">1213314153276414</string>
+    <string name="app_name">"FirebaseLogin"</string>
+    <string name="facebook_app_secretId">8de7f99d2eec7795b6a269100ceffee1</string>
+</resources>

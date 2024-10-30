@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authen/screen/otp_verification.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,7 +12,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
-  String verificationId = '';
+  String verificationID = '';
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10)),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                   onPressed: () => getOtp(), child: const Text('Send Otp')),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               TextField(
                 controller: otpController,
                 keyboardType: TextInputType.number,
@@ -48,9 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10)),
                 ),
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
-                  onPressed: () => verifyOtp, child: const Text('Verify Otp'))
+                  onPressed: () => verifyOtp(), child: const Text('Verify Otp'))
             ],
           ),
         ),
@@ -58,21 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void getOtp() async {
-    String userPhoneNumber = '+91${phoneController.text.trim()}';
-    await FirebaseAuth.instance.verifyPhoneNumber(
+  Future<void> getOtp() async {
+    var userPhoneNumber = "+91${phoneController.text.trim()}";
+    await _auth.verifyPhoneNumber(
       phoneNumber: userPhoneNumber,
       verificationCompleted: (PhoneAuthCredential credential) async {
-        await FirebaseAuth.instance.signInWithCredential(credential);
+        await _auth.signInWithCredential(credential);
       },
       verificationFailed: (FirebaseException exception) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: ${exception.message}')),
         );
       },
-      codeSent: (String verificationID, int? resendToken) {
+      codeSent: (String verificationId, int? resendToken) async {
         setState(() {
-          verificationId = verificationID;
+          verificationID = verificationId;
         });
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('OTP has been sent!')),
@@ -80,30 +89,19 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       codeAutoRetrievalTimeout: (String verificationIDCode) {
         setState(() {
-          verificationId = verificationIDCode;
+          verificationID = verificationIDCode;
         });
       },
       timeout: const Duration(seconds: 60),
     );
   }
 
-  void verifyOtp() async {
-    String otp = otpController.text.trim();
+  void verifyOtp() {
+    var smsCode = otpController.text.toString().trim();
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId, smsCode: otp);
-    try {
-      await FirebaseAuth.instance.signInWithCredential(credential);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Phone Number Verified success')),
-      );
-    } catch (exception) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $exception')),
-      );
-    }
+        verificationId: this.verificationID, smsCode: smsCode
+    );
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => OtpVerification()));
   }
-
 }
-
-
 
