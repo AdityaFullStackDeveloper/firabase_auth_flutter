@@ -1,15 +1,16 @@
-import 'package:firebase_authen/data_base/firestore_database.dart';
-import 'package:firebase_authen/firebase_options.dart';
-import 'package:firebase_authen/screen/signUp_screen.dart';
+import 'dart:developer';
 import 'package:firebase_authen/screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp();
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  log("FCM Token: $fcmToken");
+
   runApp(const MyApp());
 }
 

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_authen/data_base/firestore_database.dart';
+import 'package:firebase_authen/services/firestore_database.dart';
 import 'package:firebase_authen/screen/home_screen.dart';
 import 'package:firebase_authen/screen/signUp_screen.dart';
 import 'package:flutter/material.dart';
@@ -45,3 +45,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+
+

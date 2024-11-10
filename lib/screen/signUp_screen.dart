@@ -29,7 +29,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     } catch (error) {
-      stdout.write("Sign Up Error: $error");
       Fluttertoast.showToast(msg: "Error: $error");
     }
   }

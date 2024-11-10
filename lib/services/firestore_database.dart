@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_authen/screen/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authen/services/RealTIme_database.dart';
 import 'package:flutter/material.dart';
 
 class FireStoreDatabase extends StatefulWidget {
@@ -18,25 +19,43 @@ class _FireStoreDatabaseState extends State<FireStoreDatabase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('FireStore Database'),
-        backgroundColor: Colors.orange,
+        title: const Text(
+          'FireStore Database',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.teal,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            const SizedBox(height: 10,),
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
+              decoration: const InputDecoration(
+                  labelText: 'Name',
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.teal))),
             ),
+            const SizedBox(height: 10,),
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(
+                  labelText: 'Email',
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.teal))),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _addDataToFireStore,
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white, elevation: 3),
               child: const Text('Add Data'),
             ),
             const SizedBox(height: 10),
@@ -47,6 +66,18 @@ class _FireStoreDatabaseState extends State<FireStoreDatabase> {
                 );
               },
               child: const Text('View All Data'),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white, elevation: 3),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const RealtimeDatabase()),
+                );
+              },
+              child: const Text('RealTimeDatabase'),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white, elevation: 3),
             ),
           ],
         ),
@@ -86,4 +117,3 @@ class _FireStoreDatabaseState extends State<FireStoreDatabase> {
     }
   }
 }
-

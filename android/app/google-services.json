@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "947472091315",
+    "firebase_url": "https://fir-auth-d551f-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "fir-auth-d551f",
-    "storage_bucket": "fir-auth-d551f.appspot.com"
+    "storage_bucket": "fir-auth-d551f.firebasestorage.app"
   },
   "client": [
     {
